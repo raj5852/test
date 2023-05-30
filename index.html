@@ -1,13 +1,14 @@
-hello 1 (modify) (chnage from branch6)
+ 
+    if (Auth::check()) {
+            // $expiresAt = now()->addMinutes(2); /* keep online for 2 min */
+            // Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
 
-hello 2
-hello 3
-hello 4
-hello 5
-hello 6
-hello 7 from branch 2
-hello 8 from branch 3
-hello 8 from branch 4,,,,,
+            /* last seen */
+            User::where('id', Auth::user()->id)->update(['last_seen' => now()]);
+        }
 
-some change form branch 5
-(chnage from branch6)
+        return $next($request);
+
+
+$onlineUsers = User::where('last_seen', '>=', Carbon::now()->subMinutes(5))
+    ->get();
